@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(clicked(bool)),
             this,
             SLOT(conectar()));
-    conect(ui->DisconnectButton,
+    connect(ui->DisconnectButton,
            SIGNAL(clicked(bool)),
            this,
            SLOT(desconectar()));
@@ -95,8 +95,9 @@ void MainWindow::desconectar()
 {
     socket->disconnectFromHost();
     if (socket->state() == QAbstractSocket::UnconnectedState ||
-            socket->waitForDisconnected(1000))
-        qDebug("Disconnected!")
+            socket->waitForDisconnected(1000)){
+        qDebug("Disconnected!");
+    }
 }
 
 
