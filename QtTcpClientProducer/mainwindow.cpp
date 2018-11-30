@@ -57,7 +57,9 @@ MainWindow::MainWindow(QWidget *parent) :
             this,
             SLOT(stopTransmit()));
 }
-
+/**
+* Conecta o múdulo produtor de dados ao módulo servidor.
+*/
 void MainWindow::tcpConnect()
 {
     socket->connectToHost("127.0.0.1",1234);
@@ -68,7 +70,9 @@ void MainWindow::tcpConnect()
         qDebug() << "Disconnected!";
     }
 }
-
+/**
+* Envia dados ao múdulo servidor do sistema periodicamente.
+*/
 void MainWindow::timerEvent(QTimerEvent *event)
 {
     QDateTime datetime;
@@ -86,7 +90,9 @@ void MainWindow::timerEvent(QTimerEvent *event)
     }
     ui->textBrowser->append(mensagem);
 }
-
+/**
+* Envia uma mensagem ao módulo servidor.
+*/
 void MainWindow::putData()
 {
     QDateTime datetime;
@@ -104,17 +110,23 @@ void MainWindow::putData()
         }
     }
 }
-
+/**
+*Altera os valores no display lcd MIN.
+*/
 void MainWindow::minLcd()
 {
     ui->lcdMinNumber->display(ui->horizontalMinSlider->value());
 }
-
+/**
+*Altera os valores no display lcd MAX.
+*/
 void MainWindow::maxLcd()
 {
     ui->lcdMaxNumber->display(ui->horizontalMaxSlider->value());
 }
-
+/**
+*Altera os valores do timing.
+*/
 void MainWindow::timingLabel()
 {
     time = ui->timingSlider->value()*1000;
@@ -125,7 +137,9 @@ void MainWindow::timingLabel()
     QString valor = QString::number(ui->timingSlider->value());
     ui->timingLabelValue->setText(valor);
 }
-
+/**
+*Conecta o módulo produtor de dados a um host digitado pelo usuário no LineEdit.
+*/
 void MainWindow::conectar()
 {
     QString host = ui->ipLineEdit->text();
@@ -138,7 +152,9 @@ void MainWindow::conectar()
     }
 
 }
-
+/**
+*Desconecta o módulo produtor de um host.
+*/
 void MainWindow::desconectar()
 {
     socket->disconnectFromHost();
@@ -147,19 +163,25 @@ void MainWindow::desconectar()
         qDebug("Disconnected!");
     }
 }
-
+/**
+*Atualiza o valor máximo que poderá ser enviado ao módulo servidor.
+*/
 void MainWindow::setValorMax()
 {
     valorMax = ui->horizontalMaxSlider->value();
     qDebug() << "Valor máximo: " << valorMax;
 }
-
+/**
+*Atualiza o valor máximo que poderá ser enviado ao módulo servidor.
+*/
 void MainWindow::setValorMin()
 {
     valorMin = ui->horizontalMinSlider->value();
     qDebug() << "Valor mínimo: " << valorMin;
 }
-
+/**
+*Inicia a transmissão periódica de dados ao servidor.
+*/
 void MainWindow::startTransmit()
 {
     if(useTimer == false){
@@ -167,7 +189,9 @@ void MainWindow::startTransmit()
         useTimer = true;
     }
 }
-
+/**
+* Paraliza transmissão de dados ao servidor.
+*/
 void MainWindow::stopTransmit()
 {
     if(timer == true){
