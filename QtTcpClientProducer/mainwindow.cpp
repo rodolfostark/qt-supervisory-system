@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     socket = new QTcpSocket(this);
     tcpConnect();
-
     connect(ui->pushButtonPut,
             SIGNAL(clicked(bool)),
             this,
@@ -138,7 +137,7 @@ void MainWindow::timingLabel()
     ui->timingLabelValue->setText(valor);
 }
 /**
-*Conecta o módulo produtor de dados a um host digitado pelo usuário no LineEdit.
+*Conecta o módulo produtor de dados a um endereço informado pelo usuário no LineEdit.
 */
 void MainWindow::conectar()
 {
