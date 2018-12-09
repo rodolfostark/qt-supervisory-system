@@ -92,7 +92,10 @@ void MainWindow::desconectar()
     }
 
 }
-
+/**
+ * @brief MainWindow::setTimingValue
+ * Altera o valor do label
+ */
 void MainWindow::setTimingValue()
 {
     time = ui->horizontalSliderTiming->value()*1000;
