@@ -3,51 +3,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QColor>
-#include <cmath>
 #include <QDebug>
-#include <QMouseEvent>
-
-Plotter::Plotter(QWidget *parent) :
-    QWidget(parent)
-{
-    amplitude = 0;
-    frequencia = 1;
-    angulo = 0;
-    velocidade = 0;
-    temporizador = startTimer(10);
-    animando = true;
-    rfundo=255;
-    gfundo=255;
-    bfundo=220;
-    // habilita o rastreio da posicao do mouse
-    setMouseTracking(true);
-}
-
-void Plotter::timerEvent(QTimerEvent *event){
-    angulo = angulo + velocidade;
-    repaint();
-}
-
-void Plotter::mousePressEvent(QMouseEvent *event)
-{
-    //  qDebug() << event->x() << event->y();
-    emit clickX(event->x());
-    emit clickY(event->y());
-}
-
-void Plotter::mouseMoveEvent(QMouseEvent *event)
-{
-    emit moveX(event->x());
-    emit moveY(event->y());
-}
-
-void Plotter::setCorFundo(int r, int g, int b)
-{
-    rfundo = r;
-    gfundo = g;
-    bfundo = b;
-    repaint();
-}
 
 void Plotter::paintEvent(QPaintEvent *event)
 {
@@ -87,57 +43,4 @@ void Plotter::paintEvent(QPaintEvent *event)
 
     painter.drawLine(0,height()/2, width(), height()/2);
 
-    // desenha o seno
-
-    float x;
-    float y;
-    int px, py, pxold, pyold;
-    pxold = 0;
-    pyold = height()/2;
-
-    pen.setWidth(2);
-    pen.setColor(QColor(0,200,0));
-    painter.setPen(pen);
-    for(int i=0; i<width(); i++){
-        x = (float)i*2*PI/width();
-        y = amplitude*sin(frequencia*x+angulo);
-        px = i;
-        py = height()/2 - y*height()/2;
-        painter.drawLine(pxold, pyold, px, py);
-        pxold = px;
-        pyold = py;
-    }
-
-    //  painter.drawLine(0,0, width()/7, height());
-
 }
-
-void Plotter::mudaAmplitude(int amp){
-    amplitude = amp/100.0;
-    repaint();
-}
-
-void Plotter::mudaFrequencia(int freq)
-{
-    frequencia = freq;
-    repaint();
-}
-
-void Plotter::mudaVelocidade(int vel)
-{
-    velocidade = vel/100.0;
-    //  repaint();
-}
-
-void Plotter::anima()
-{
-    if(animando){
-        killTimer(temporizador);
-        animando = false;
-    }
-    else{
-        temporizador = startTimer(10);
-        animando = true;
-    }
-}
-

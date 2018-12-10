@@ -193,7 +193,7 @@ void MainWindow::startTransmit()
 */
 void MainWindow::stopTransmit()
 {
-    if(timer == true){
+    if(useTimer == true){
         killTimer(timer);
         useTimer = false;
     }

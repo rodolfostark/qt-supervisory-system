@@ -26,10 +26,12 @@ public slots:
   void getListOfHosts();
   void startReceive();
   void stopReceive();
+  void selecionarMaquina();
 private:
-  int time = 1;
+  int time = 800;
   int timer;
   bool useTimer = false;
+  QString hostToGet;
   Ui::MainWindow *ui;
   QTcpSocket *socket;
 };

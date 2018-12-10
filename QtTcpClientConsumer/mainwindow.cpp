@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "plotter.h"
 #include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     socket = new QTcpSocket(this);
-    tcpConnect();
+    //tcpConnect();
 
     connect(ui->pushButtonGet,
             SIGNAL(clicked(bool)),
@@ -31,6 +30,18 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(clicked(bool)),
             this,
             SLOT(getListOfHosts()));
+    connect(ui->listWidget,
+            SIGNAL(itemClicked(QListWidgetItem*)),
+            this,
+            SLOT(selecionarMaquina()));
+    connect(ui->pushButtonStart,
+            SIGNAL(clicked(bool)),
+            this,
+            SLOT(startReceive()));
+    connect(ui->pushButtonStop,
+            SIGNAL(clicked(bool)),
+            this,
+            SLOT(stopReceive()));
 }
 
 void MainWindow::tcpConnect(){
@@ -42,7 +53,6 @@ void MainWindow::tcpConnect(){
         qDebug() << "Disconnected";
     }
 }
-
 void MainWindow::getData(){
     QString str;
     QByteArray array;
@@ -76,7 +86,7 @@ void MainWindow::conectar()
     QString host = ui->lineEditIpServer->text();
     socket->connectToHost(host, 1234);
     if(socket->waitForConnected(3000)){
-        qDebug() << "Connected!";
+        qDebug() << "Connected to " + host;
     }
     else{
         qDebug() << "Disconnected!";
@@ -92,10 +102,17 @@ void MainWindow::desconectar()
     }
 
 }
-
+/**
+ * @brief MainWindow::setTimingValue
+ * Altera o valor do label
+ */
 void MainWindow::setTimingValue()
 {
     time = ui->horizontalSliderTiming->value()*1000;
+    if(useTimer){
+        killTimer(timer);
+        timer = startTimer(time);
+    }
     QString timeValue = QString::number(ui->horizontalSliderTiming->value());
     ui->labelTimingValue->setText(timeValue);
 }
@@ -105,6 +122,7 @@ void MainWindow::setTimingValue()
  */
 void MainWindow::getListOfHosts()
 {
+    ui->listWidget->clear();
     QString host;
     qDebug() << "look for the producer...";
     if(socket->state() == QAbstractSocket::ConnectedState){
@@ -145,39 +163,19 @@ void MainWindow::stopReceive()
     }
 
 }
+
+void MainWindow::selecionarMaquina()
+{
+    hostToGet = ui->listWidget->currentItem()->text();
+    qDebug() << hostToGet;
+}
 /**
  * @brief MainWindow::timerEvent
  * O timerEvent irá repetir o processo de leitura de dados disponíveis no servidor em intervalos definidos de tempo.
  * @param event
  */
 void MainWindow::timerEvent(QTimerEvent *event){
-    QString str;
-    QByteArray array;
-    QStringList list;
-    qint64 thetime;
-    qDebug() << "to get data...";
-    if(socket->state() == QAbstractSocket::ConnectedState){
-        if(socket->isOpen()){
-            qDebug() << "reading...";
-            socket->write("get 127.0.0.1 5\r\n");
-            socket->waitForBytesWritten();
-            socket->waitForReadyRead();
-            qDebug() << socket->bytesAvailable();
-            while(socket->bytesAvailable()){
-                str = socket->readLine().replace("\n","").replace("\r","");
-                list = str.split(" ");
-                if(list.size() == 2){
-                    bool ok;
-                    str = list.at(0);
-                    thetime = str.toLongLong(&ok);
-                    str = list.at(1);
-                    qDebug() << thetime << ": " << str;
-                }
-            }
-        }
-    }
-
-
+    getData();
 }
 MainWindow::~MainWindow()
 {
