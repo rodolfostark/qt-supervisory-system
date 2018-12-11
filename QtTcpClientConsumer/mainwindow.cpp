@@ -8,12 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     socket = new QTcpSocket(this);
-    //tcpConnect();
 
-    connect(ui->pushButtonGet,
-            SIGNAL(clicked(bool)),
-            this,
-            SLOT(getData()));
     connect(ui->pushButtonConnect,
             SIGNAL(clicked(bool)),
             this,
@@ -58,10 +53,14 @@ void MainWindow::getData(){
     QStringList list;
     QByteArray array;
     qint64 thetime;
+
     qDebug() << "to get data...";
+
+    dados.erase(dados.begin(),dados.end());
+
     if(socket->state() == QAbstractSocket::ConnectedState){
         if(socket->isOpen()){
-            QString comand = "get " + hostToGet+ " 10\r\n";
+            QString comand = "get " + hostToGet + " 10\r\n";
             qDebug() << "reading...";
             socket->write(comand.toStdString().c_str());
             socket->waitForBytesWritten();
@@ -70,15 +69,17 @@ void MainWindow::getData(){
             while(socket->bytesAvailable()){
                 str = socket->readLine().replace("\n","").replace("\r","");
                 list = str.split(" ");
-                listToSend.push_back(list.at(1));
                 if(list.size() == 2){
                     bool ok;
                     str = list.at(0);
                     thetime = str.toLongLong(&ok);
                     str = list.at(1);
+                    dados.append(str.toInt(&ok));
                     qDebug() << thetime << ": " << str;
+                  }
                 }
-            }
+                qDebug() << "lista = "<< dados;
+                ui->widgetPlotter->atualizaPontos(dados);
         }
     }
 }
@@ -159,7 +160,7 @@ void MainWindow::startReceive()
  */
 void MainWindow::stopReceive()
 {
-    if(timer == true){
+    if(useTimer == true){
         killTimer(timer);
         useTimer = false;
     }
@@ -178,7 +179,6 @@ void MainWindow::selecionarMaquina()
  */
 void MainWindow::timerEvent(QTimerEvent *event){
     getData();
-    ui->widgetGrafico->updatePlot(listToSend);
 }
 MainWindow::~MainWindow()
 {

@@ -27,7 +27,7 @@ public slots:
     void stopReceive();
     void selecionarMaquina();
 private:
-    QStringList listToSend;
+    QList<int> dados;
     int time = 800;
     int timer;
     bool useTimer = false;

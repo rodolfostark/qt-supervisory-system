@@ -9,6 +9,7 @@
 #include "../QtTcpClientConsumer/grafico.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QList>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'grafico.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -21,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Grafico_t {
-    QByteArrayData data[6];
-    char stringdata0[50];
+    QByteArrayData data[7];
+    char stringdata0[65];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,15 +33,16 @@ struct qt_meta_stringdata_Grafico_t {
 static const qt_meta_stringdata_Grafico_t qt_meta_stringdata_Grafico = {
     {
 QT_MOC_LITERAL(0, 0, 7), // "Grafico"
-QT_MOC_LITERAL(1, 8, 10), // "updatePlot"
-QT_MOC_LITERAL(2, 19, 0), // ""
-QT_MOC_LITERAL(3, 20, 11), // "novaAmostra"
-QT_MOC_LITERAL(4, 32, 8), // "acharMax"
-QT_MOC_LITERAL(5, 41, 8) // "acharMin"
+QT_MOC_LITERAL(1, 8, 14), // "atualizaPontos"
+QT_MOC_LITERAL(2, 23, 0), // ""
+QT_MOC_LITERAL(3, 24, 10), // "QList<int>"
+QT_MOC_LITERAL(4, 35, 11), // "novosPontos"
+QT_MOC_LITERAL(5, 47, 8), // "acharMax"
+QT_MOC_LITERAL(6, 56, 8) // "acharMin"
 
     },
-    "Grafico\0updatePlot\0\0novaAmostra\0"
-    "acharMax\0acharMin"
+    "Grafico\0atualizaPontos\0\0QList<int>\0"
+    "novosPontos\0acharMax\0acharMin"
 };
 #undef QT_MOC_LITERAL
 
@@ -59,11 +61,11 @@ static const uint qt_meta_data_Grafico[] = {
 
  // slots: name, argc, parameters, tag, flags
        1,    1,   29,    2, 0x0a /* Public */,
-       4,    0,   32,    2, 0x0a /* Public */,
-       5,    0,   33,    2, 0x0a /* Public */,
+       5,    0,   32,    2, 0x0a /* Public */,
+       6,    0,   33,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QStringList,    3,
+    QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Int,
     QMetaType::Int,
 
@@ -76,12 +78,23 @@ void Grafico::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         Grafico *_t = static_cast<Grafico *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->updatePlot((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 0: _t->atualizaPontos((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
         case 1: { int _r = _t->acharMax();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 2: { int _r = _t->acharMin();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<int> >(); break;
+            }
+            break;
         }
     }
 }
@@ -116,7 +129,7 @@ int Grafico::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 3)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 3;
     }
     return _id;

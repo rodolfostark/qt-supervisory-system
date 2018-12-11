@@ -52,13 +52,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../QtTcpClientConsumer/main.cpp \
 		../QtTcpClientConsumer/mainwindow.cpp \
-		../QtTcpClientConsumer/grafico.cpp moc_mainwindow.cpp \
-		moc_grafico.cpp
+		../QtTcpClientConsumer/plotter.cpp moc_mainwindow.cpp \
+		moc_plotter.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		grafico.o \
+		plotter.o \
 		moc_mainwindow.o \
-		moc_grafico.o
+		moc_plotter.o
 DIST          = /opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/common/linux.conf \
@@ -249,9 +249,9 @@ DIST          = /opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/features/lex.prf \
 		../QtTcpClientConsumer/QtTcpClientConsumer.pro ../QtTcpClientConsumer/mainwindow.h \
-		../QtTcpClientConsumer/grafico.h ../QtTcpClientConsumer/main.cpp \
+		../QtTcpClientConsumer/plotter.h ../QtTcpClientConsumer/main.cpp \
 		../QtTcpClientConsumer/mainwindow.cpp \
-		../QtTcpClientConsumer/grafico.cpp
+		../QtTcpClientConsumer/plotter.cpp
 QMAKE_TARGET  = QtTcpClient
 DESTDIR       = 
 TARGET        = QtTcpClient
@@ -667,8 +667,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtTcpClientConsumer/mainwindow.h ../QtTcpClientConsumer/grafico.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QtTcpClientConsumer/main.cpp ../QtTcpClientConsumer/mainwindow.cpp ../QtTcpClientConsumer/grafico.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtTcpClientConsumer/mainwindow.h ../QtTcpClientConsumer/plotter.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QtTcpClientConsumer/main.cpp ../QtTcpClientConsumer/mainwindow.cpp ../QtTcpClientConsumer/plotter.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../QtTcpClientConsumer/mainwindow.ui $(DISTDIR)/
 
 
@@ -701,9 +701,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_grafico.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_plotter.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_grafico.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_plotter.cpp
 moc_mainwindow.cpp: /opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qmainwindow.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -821,7 +821,7 @@ moc_mainwindow.cpp: /opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt5.11.1/5.11.1/gcc_64/bin/moc
 	/opt/Qt5.11.1/5.11.1/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/linux-g++ -I'/home/rodolfo/Documentos/C&T - COMPUTAÇÃO/4º SEMESTRE/PROGRAMAÇÃO AVANÇADA/QtSupervisorySystem/QtTcpClientConsumer' -I/opt/Qt5.11.1/5.11.1/gcc_64/include -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtNetwork -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../QtTcpClientConsumer/mainwindow.h -o moc_mainwindow.cpp
 
-moc_grafico.cpp: /opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/QWidget \
+moc_plotter.cpp: /opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/QWidget \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qwidget.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui/qtguiglobal.h \
@@ -924,10 +924,10 @@ moc_grafico.cpp: /opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/QWidget \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtCore/qfiledevice.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui/qvector2d.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui/qtouchdevice.h \
-		../QtTcpClientConsumer/grafico.h \
+		../QtTcpClientConsumer/plotter.h \
 		moc_predefs.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/bin/moc
-	/opt/Qt5.11.1/5.11.1/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/linux-g++ -I'/home/rodolfo/Documentos/C&T - COMPUTAÇÃO/4º SEMESTRE/PROGRAMAÇÃO AVANÇADA/QtSupervisorySystem/QtTcpClientConsumer' -I/opt/Qt5.11.1/5.11.1/gcc_64/include -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtNetwork -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../QtTcpClientConsumer/grafico.h -o moc_grafico.cpp
+	/opt/Qt5.11.1/5.11.1/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/opt/Qt5.11.1/5.11.1/gcc_64/mkspecs/linux-g++ -I'/home/rodolfo/Documentos/C&T - COMPUTAÇÃO/4º SEMESTRE/PROGRAMAÇÃO AVANÇADA/QtSupervisorySystem/QtTcpClientConsumer' -I/opt/Qt5.11.1/5.11.1/gcc_64/include -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtNetwork -I/opt/Qt5.11.1/5.11.1/gcc_64/include/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../QtTcpClientConsumer/plotter.h -o moc_plotter.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -938,7 +938,7 @@ compiler_uic_clean:
 	-$(DEL_FILE) ui_mainwindow.h
 ui_mainwindow.h: ../QtTcpClientConsumer/mainwindow.ui \
 		/opt/Qt5.11.1/5.11.1/gcc_64/bin/uic \
-		../QtTcpClientConsumer/grafico.h \
+		../QtTcpClientConsumer/plotter.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/QWidget \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qwidget.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1349,7 +1349,7 @@ mainwindow.o: ../QtTcpClientConsumer/mainwindow.cpp ../QtTcpClientConsumer/mainw
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QtTcpClientConsumer/mainwindow.cpp
 
-grafico.o: ../QtTcpClientConsumer/grafico.cpp ../QtTcpClientConsumer/grafico.h \
+plotter.o: ../QtTcpClientConsumer/plotter.cpp ../QtTcpClientConsumer/plotter.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/QWidget \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qwidget.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1460,13 +1460,13 @@ grafico.o: ../QtTcpClientConsumer/grafico.cpp ../QtTcpClientConsumer/grafico.h \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui/QBrush \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtGui/QPen \
 		/opt/Qt5.11.1/5.11.1/gcc_64/include/QtCore/QDebug
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o grafico.o ../QtTcpClientConsumer/grafico.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plotter.o ../QtTcpClientConsumer/plotter.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
-moc_grafico.o: moc_grafico.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_grafico.o moc_grafico.cpp
+moc_plotter.o: moc_plotter.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_plotter.o moc_plotter.cpp
 
 ####### Install
 
