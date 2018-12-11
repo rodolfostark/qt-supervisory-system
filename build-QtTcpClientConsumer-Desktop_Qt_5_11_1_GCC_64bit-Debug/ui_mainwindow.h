@@ -24,7 +24,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "plotter.h"
+#include "grafico.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -57,7 +57,7 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QPushButton *pushButtonStart;
     QPushButton *pushButtonStop;
-    Plotter *widgetPlotter;
+    Grafico *widgetGrafico;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -201,9 +201,9 @@ public:
 
         verticalLayout_7->addLayout(horizontalLayout_4);
 
-        widgetPlotter = new Plotter(centralWidget);
-        widgetPlotter->setObjectName(QStringLiteral("widgetPlotter"));
-        widgetPlotter->setGeometry(QRect(290, 10, 261, 271));
+        widgetGrafico = new Grafico(centralWidget);
+        widgetGrafico->setObjectName(QStringLiteral("widgetGrafico"));
+        widgetGrafico->setGeometry(QRect(270, 10, 341, 331));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));

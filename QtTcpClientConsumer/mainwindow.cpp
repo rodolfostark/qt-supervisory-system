@@ -55,20 +55,22 @@ void MainWindow::tcpConnect(){
 }
 void MainWindow::getData(){
     QString str;
-    QByteArray array;
     QStringList list;
+    QByteArray array;
     qint64 thetime;
     qDebug() << "to get data...";
     if(socket->state() == QAbstractSocket::ConnectedState){
         if(socket->isOpen()){
+            QString comand = "get " + hostToGet+ " 10\r\n";
             qDebug() << "reading...";
-            socket->write("get 127.0.0.1 5\r\n");
+            socket->write(comand.toStdString().c_str());
             socket->waitForBytesWritten();
             socket->waitForReadyRead();
             qDebug() << socket->bytesAvailable();
             while(socket->bytesAvailable()){
                 str = socket->readLine().replace("\n","").replace("\r","");
                 list = str.split(" ");
+                listToSend.push_back(list.at(1));
                 if(list.size() == 2){
                     bool ok;
                     str = list.at(0);
@@ -176,6 +178,7 @@ void MainWindow::selecionarMaquina()
  */
 void MainWindow::timerEvent(QTimerEvent *event){
     getData();
+    ui->widgetGrafico->updatePlot(listToSend);
 }
 MainWindow::~MainWindow()
 {

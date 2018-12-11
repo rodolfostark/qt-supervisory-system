@@ -168,13 +168,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="Plotter" name="widgetPlotter" native="true">
+   <widget class="Grafico" name="widgetGrafico" native="true">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>270</x>
       <y>10</y>
-      <width>261</width>
-      <height>271</height>
+      <width>341</width>
+      <height>331</height>
      </rect>
     </property>
    </widget>
@@ -202,9 +202,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Plotter</class>
+   <class>Grafico</class>
    <extends>QWidget</extends>
-   <header>plotter.h</header>
+   <header>grafico.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
