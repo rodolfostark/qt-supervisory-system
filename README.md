@@ -1,4 +1,4 @@
-# QtSupervisorySystem
+# Qt Supervisory System
 
 ## Apresentação 
 
