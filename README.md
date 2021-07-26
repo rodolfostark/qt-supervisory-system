@@ -108,7 +108,7 @@ server started at:
 
 O funcionamento desse módulo pode ser melhor exemplificado na figura que segue:
 
-![Diagrama do módulo servidor](imagens/consumidor_doc_photo.png)
+![Diagrama do módulo servidor](images/consumidor_doc_photo.png)
 
 ## O módulo cliente produtor de dados
 
